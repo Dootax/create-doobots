@@ -32,7 +32,7 @@
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json",
-    "./bin/create-doobots": "./bin/create-doobots.js"
+    "./dist/create-doobots": "./dist/create-doobots.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",
