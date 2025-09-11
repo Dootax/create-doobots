@@ -1,0 +1,55 @@
+{
+  "name": "create-doobots",
+  "description": "CLI para criar projetos para serem executados no DooBots com um único comando",
+  "version": "1.0.0",
+  "type": "module",
+  "author": {
+    "name": "Dootax",
+    "email": "equipetecnologia@dootax.com.br",
+    "url": "https://github.com/dootax"
+  },
+  "bugs": {
+    "url": "https://github.com/dootax/create-doobots/issues"
+  },
+  "homepage": "https://github.com/dootax/create-doobots",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dootax/create-doobots.git"
+  },
+  "license": "MIT",
+  "bin": "./dist/create-doobots.js",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "publish": "npm publish --access public"
+  },
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "require": "./build/index.js",
+      "import": "./build/index.mjs",
+      "default": "./build/index.js"
+    },
+    "./package.json": "./package.json",
+    "./bin/create-doobots": "./bin/create-doobots.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "degit": "^2.8.4",
+    "prompts": "^2.4.2"
+  },
+  "engines": {
+    "node": "^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/degit": "^2.8.6",
+    "@types/graceful-fs": "^4.1.9",
+    "@types/prompts": "^2.4.9",
+    "@types/node": "^24.3.1",
+    "typescript": "^5.9.2"
+  }
+}
