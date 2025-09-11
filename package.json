@@ -18,18 +18,18 @@
   },
   "license": "MIT",
   "bin": "./dist/create-doobots.js",
-  "main": "./build/index.js",
-  "types": "./build/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "publish": "npm publish --access public"
   },
   "exports": {
     ".": {
-      "types": "./build/index.d.ts",
-      "require": "./build/index.js",
-      "import": "./build/index.mjs",
-      "default": "./build/index.js"
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
     },
     "./package.json": "./package.json",
     "./bin/create-doobots": "./bin/create-doobots.js"
