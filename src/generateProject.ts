@@ -1,30 +1,17 @@
 import fs from 'fs';
 import path from 'path';
-import type { PromptsResults } from './types';
+import type { Language, PromptsResults } from './types';
 import degit from 'degit';
 import chalk from 'chalk';
 
-const REPOS: Record<"TS" | "JS", string> = {
+const REPOS: Record<Language, string> = {
   TS: 'dootax/doobots-typescript-example',
   JS: 'dootax/doobots-javascript-example',
+  PYTHON: 'dootax/doobots-python-example',
 };
 
-export const generateProject = async (results: PromptsResults, projectFolder: string): Promise<void> => {
-  const { includeInputJsonExample, includeTests, language, projectName } = results;
-
-  fs.mkdirSync(projectFolder);
-
-  const repoToClone = REPOS[language];
-
-  console.log(chalk.green(`📦 Criando projeto "${projectName}" com o template "${repoToClone}"...`));
-
-  const emitter = degit(repoToClone, {
-    cache: false,
-    force: true,
-    verbose: true,
-  });
-
-  await emitter.clone(projectFolder);
+async function generateJavaScriptTypeScriptProject(results: PromptsResults, projectFolder: string): Promise<void> {
+  const { includeInputJsonExample, includeTests, language } = results;
 
   if (!includeInputJsonExample) {
     fs.rmSync(path.join(projectFolder, 'input.json'));
@@ -61,4 +48,59 @@ export const generateProject = async (results: PromptsResults, projectFolder: st
   fs.rmSync(path.join(projectFolder, '.gitignore'));
   fs.rmSync(path.join(projectFolder, 'README.md'));
   fs.rmSync(path.join(projectFolder, 'package-lock.json'));
+}
+
+async function generatePythonProject(results: PromptsResults, projectFolder: string): Promise<void> {
+  const { includeInputJsonExample, includeTests } = results;
+
+  if (!includeInputJsonExample) {
+    fs.rmSync(path.join(projectFolder, 'input.json'));
+  }
+
+  if (!includeTests) {
+    const requirementsPath = path.join(projectFolder, 'requirements.txt');
+    let requirements = fs.readFileSync(requirementsPath, 'utf-8');
+    requirements = requirements
+      .split('\n')
+      .filter((line) => !line.toLowerCase().includes('pytest'))
+      .join('\n');
+    fs.writeFileSync(requirementsPath, requirements);
+
+    fs.rmSync(path.join(projectFolder, 'tests'), { recursive: true, force: true });
+    fs.rmSync(path.join(projectFolder, 'pytest.ini'));
+  }
+
+  fs.rmSync(path.join(projectFolder, '.gitignore'));
+  fs.rmSync(path.join(projectFolder, 'README.md'));
+}
+
+export const generateProject = async (results: PromptsResults, projectFolder: string): Promise<void> => {
+  const { language, projectName } = results;
+
+  fs.mkdirSync(projectFolder);
+
+  const repoToClone = REPOS[language];
+
+  console.log(chalk.green(`📦 Criando projeto "${projectName}" com o template "${repoToClone}"...`));
+
+  const emitter = degit(repoToClone, {
+    cache: false,
+    force: true,
+    verbose: true,
+  });
+
+  await emitter.clone(projectFolder);
+
+  switch (language) {
+    case 'TS':
+    case 'JS':
+      await generateJavaScriptTypeScriptProject(results, projectFolder);
+      break;
+    case 'PYTHON':
+      await generatePythonProject(results, projectFolder);
+      break;
+    default:
+      console.error(chalk.red(`Linguagem "${language}" não suportada.`));
+      break;
+  }
 };

@@ -11,6 +11,7 @@ export const promptQuestions: Array<PromptObject> = [
     choices: [
       { title: 'TypeScript', value: 'TS' },
       { title: 'JavaScript', value: 'JS' },
+      { title: 'Python', value: 'PYTHON' },
     ],
     initial: 0,
     message: 'Qual linguagem você quer usar?',
@@ -19,7 +20,7 @@ export const promptQuestions: Array<PromptObject> = [
   },
   {
     initial: true,
-    message: 'Você gostaria de incluir testes (Jest)?',
+    message: 'Você gostaria de incluir testes?',
     name: 'includeTests',
     type: 'confirm',
   },

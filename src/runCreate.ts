@@ -60,9 +60,17 @@ export async function runCreate(rootDir = process.cwd()): Promise<void> {
   console.log('');
   console.log('Próximos passos:');
   console.log(chalk.gray('---------------------'));
-  console.log(chalk.cyan(`  cd ${results.projectName}`));
-  console.log(chalk.cyan('  npm install'));
-  console.log(chalk.cyan('  npm run local'));
+  if (results.language === 'TS' || results.language === 'JS') {
+    console.log(chalk.cyan(`  cd ${results.projectName}`));
+    console.log(chalk.cyan('  npm install'));
+    console.log(chalk.cyan('  npm run local'));
+  } else if (results.language === 'PYTHON') {
+    console.log(chalk.cyan(`  cd ${results.projectName}`));
+    console.log(chalk.cyan('  python -m venv venv'));
+    console.log(chalk.cyan('  source venv/bin/activate  no Windows use `venv\\Scripts\\activate`'));
+    console.log(chalk.cyan('  pip install -r requirements.txt'));
+    console.log(chalk.cyan('  doobots-run'));
+  }
   console.log(chalk.gray('---------------------'));
   console.log('');
 }

@@ -1,7 +1,7 @@
 {
   "name": "create-doobots",
   "description": "CLI para criar projetos para serem executados no DooBots com um único comando",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "author": {
     "name": "Dootax",
